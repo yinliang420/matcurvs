@@ -32,10 +32,10 @@ from scipy.signal import find_peaks, peak_widths
 import os
 
 KMEANS_ROOT = Path(os.environ.get("KMEANS_ROOT", Path(__file__).resolve().parents[1]))
-DATA_BASE = Path("/Volumes/yinliang/数据库项目/data_base")
-L2_OUT = KMEANS_ROOT / "data_base_L2"
-LABEL_DIR = KMEANS_ROOT / "label"
-SUBFIG_DIR = KMEANS_ROOT / "subfigures_and_class"
+DATA_BASE = Path(os.environ.get("DATA_BASE", str(KMEANS_ROOT.parent / "data_base")))
+L2_OUT = Path(os.environ.get("L2_OUT", str(KMEANS_ROOT / "data_base_L2")))
+LABEL_DIR = Path(os.environ.get("MATCURVS_L1_DIR", str(KMEANS_ROOT / "label")))
+SUBFIG_DIR = Path(os.environ.get("MATCURVS_L0_DIR", str(KMEANS_ROOT / "subfigures_and_class")))
 
 OUT_RIGOROUS = KMEANS_ROOT / "experiments" / "mr_set_rigorous.jsonl"
 OUT_SCALED = KMEANS_ROOT / "experiments" / "mr_set_scaled.jsonl"

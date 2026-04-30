@@ -194,23 +194,22 @@ def detect_axes_yolo_batch(image_paths: List[str],
 
 # Example usage
 if __name__ == '__main__':
-    # Example 1: Detect single image
-    image_path = "E:\MLLM_Selected\\axisline/00d86d25771a672c3247badbeeda4e07fa8b644cd552780d082eae9db93396fb_1.jpg"
-    x_axis, y_axis = detect_axes_yolo(image_path)
-    
-    if x_axis:
-        print(f"X-axis: from ({x_axis[0]}, {x_axis[1]}) to ({x_axis[2]}, {x_axis[3]})")
+    import sys
+    if len(sys.argv) < 2:
+        print("Usage: python Axis_yolo_extraction.py <image_path> [<image_path> ...]")
+        sys.exit(1)
+    if len(sys.argv) == 2:
+        x_axis, y_axis = detect_axes_yolo(sys.argv[1])
+        if x_axis:
+            print(f"X-axis: from ({x_axis[0]}, {x_axis[1]}) to ({x_axis[2]}, {x_axis[3]})")
+        else:
+            print("X-axis not detected")
+        if y_axis:
+            print(f"Y-axis: from ({y_axis[0]}, {y_axis[1]}) to ({y_axis[2]}, {y_axis[3]})")
+        else:
+            print("Y-axis not detected")
     else:
-        print("X-axis not detected")
-    
-    if y_axis:
-        print(f"Y-axis: from ({y_axis[0]}, {y_axis[1]}) to ({y_axis[2]}, {y_axis[3]})")
-    else:
-        print("Y-axis not detected")
-    
-    # Example 2: Batch detection
-    # image_paths = ["image1.jpg", "image2.jpg", "image3.jpg"]
-    # results = detect_axes_yolo_batch(image_paths)
-    # for i, (x_axis, y_axis) in enumerate(results):
-    #     print(f"Image {i+1}: x_axis={x_axis}, y_axis={y_axis}")
+        results = detect_axes_yolo_batch(sys.argv[1:])
+        for i, (x_axis, y_axis) in enumerate(results):
+            print(f"Image {i+1}: x_axis={x_axis}, y_axis={y_axis}")
 

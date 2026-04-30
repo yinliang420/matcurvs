@@ -47,3 +47,6 @@ Thumbs.db
 
 # Backup files
 *.bak*
+
+# Local review notes (do not push)
+CODE_REVIEW.md

@@ -17,3 +17,9 @@ ultralytics
 openai>=1.40
 google-genai>=0.3
 anthropic
+
+# Async I/O for the multimodal-LLM subfigure classifier (classifier/figure_class.py)
+aiofiles
+
+# HuggingFace dataset hub (download / upload MatCurvs L0/L1/L2)
+huggingface_hub
