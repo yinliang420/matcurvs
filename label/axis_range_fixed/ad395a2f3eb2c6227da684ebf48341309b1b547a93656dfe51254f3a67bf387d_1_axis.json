@@ -1,0 +1,20 @@
+{
+  "image_id": "ad395a2f3eb2c6227da684ebf48341309b1b547a93656dfe51254f3a67bf387d_1",
+  "axis_range_old": {
+    "x_min": 0.0,
+    "x_max": 100.0,
+    "y_min": 0.0,
+    "y_max": 100.0
+  },
+  "axis_range_new": {
+    "x_min": 1.0613017177264794,
+    "x_max": 1183.6510437557217,
+    "y_min": 0.04812030075187956,
+    "y_max": 1.0165413533834586
+  },
+  "mapping_ready": true,
+  "n_lines": 2,
+  "n_points": 88,
+  "is_placeholder": true,
+  "needs_review": true
+}

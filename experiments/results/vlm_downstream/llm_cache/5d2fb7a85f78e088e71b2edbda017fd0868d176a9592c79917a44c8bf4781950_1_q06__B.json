@@ -1,0 +1,19 @@
+{
+  "qid": "5d2fb7a85f78e088e71b2edbda017fd0868d176a9592c79917a44c8bf4781950_1_q06",
+  "image_id": "5d2fb7a85f78e088e71b2edbda017fd0868d176a9592c79917a44c8bf4781950_1",
+  "condition": "B",
+  "x_star": 74.37855103836172,
+  "y_gt": 20.815865248927274,
+  "raw_response": "you are reading a scientific line chart... What is the value of y on the LONGEST plotted curve at x = 74.38? ... We have also algorithmically extracted the curve(s)... Use it as a hint, but trust the image when they disagree.\"\n    This means I MUST trust the image.\n    Let's carefully measure the image.\n    Y-axis ticks",
+  "y_pred": 74.38,
+  "parse_method": "regex",
+  "prompt_hash": "01b26292c5966732",
+  "latency_s": 20.098863875000006,
+  "usage": {
+    "prompt_tokens": 2538,
+    "completion_tokens": 2044,
+    "total_tokens": 4582
+  },
+  "attempts": 1,
+  "error": null
+}

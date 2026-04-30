@@ -1,0 +1,19 @@
+{
+  "qid": "00e254af942098d8e96bdf46ede83de4777d8f2c17dc620ffbeb8a136197b6ba_2_q01",
+  "image_id": "00e254af942098d8e96bdf46ede83de4777d8f2c17dc620ffbeb8a136197b6ba_2",
+  "condition": "A",
+  "x_star": 908.0861852831158,
+  "y_gt": 273.74981559591265,
+  "raw_response": "```json\n{\"y\": 182.0}\n```",
+  "y_pred": 182.0,
+  "parse_method": "json",
+  "prompt_hash": "6dd5a97b0a17fedd",
+  "latency_s": 2.898942374999997,
+  "usage": {
+    "prompt_tokens": 1159,
+    "completion_tokens": 15,
+    "total_tokens": 1174
+  },
+  "attempts": 1,
+  "error": null
+}

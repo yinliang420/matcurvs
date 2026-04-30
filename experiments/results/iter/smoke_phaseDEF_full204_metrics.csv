@@ -1,0 +1,6 @@
+image_id,stratum,k_gt,k_pred,k_source,iou_global,iou_matched_mean,coverage_gt,coverage_pred,n_pred,n_iou_ge_0_8,iou_per_line,matched_pairs,fallback,ok
+00d117323855716750e5a0c3245c3d5a9e63adbfa8cafc42050e98b6f1b65b78_1,L3_few_line,4,4,gemini-3.1-pro-preview(4),0.595,0.5671,0.6122,0.9548,4,0,"[0.6964, 0.6294, 0.5439, 0.3988]","[[0, 1, 0.6964], [1, 0, 0.6294], [2, 2, 0.5439], [3, 3, 0.3988]]",False,True
+00d6725b90c1eb72e1be21511e678bc3e2157a0f84b0b2954a36c31d778f94f2_1,L3_few_line,3,3,gemini-3.1-pro-preview(3),0.5283,0.257,0.5436,0.9494,3,0,"[0.0662, 0.2689, 0.436]","[[0, 2, 0.0662], [1, 1, 0.2689], [2, 0, 0.436]]",False,True
+00d86d25771a672c3247badbeeda4e07fa8b644cd552780d082eae9db93396fb_1,L3_few_line,4,1,gemini-3.1-pro-preview(1),0.3736,0.041,0.4288,0.7438,1,0,"[0.0, 0.1639, 0.0, 0.0]","[[1, 0, 0.1639]]",False,True
+00d91d2c379ac1072e170a25172a6087a589c97a4c41e2cb02373783527afd66_4,L2_two_line,2,2,gemini-3.1-pro-preview(2),0.2973,0.1079,0.686,0.3441,2,0,"[0.0144, 0.2013]","[[0, 1, 0.0144], [1, 0, 0.2013]]",False,True
+00dc9ab982d5a260225a9bfa21374f89c5cf13c8e6310d2d4e2e255f073a65fc_1,L2_two_line,2,2,gemini-3.1-pro-preview(2),0.4134,0.2375,0.5828,0.5872,2,0,"[0.2485, 0.2264]","[[0, 0, 0.2485], [1, 1, 0.2264]]",False,True

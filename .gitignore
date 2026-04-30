@@ -1,0 +1,49 @@
+# Secrets
+.env
+.env.local
+
+# Model checkpoints (release via HuggingFace or GitHub release tag, not in repo)
+*.pt
+*.pth
+
+# Bundled datasets (live on HuggingFace)
+data_base_L2/
+release/
+
+# Run-time outputs
+pipeline_out*/
+experiments/mr_answers/
+experiments/mr_logs/
+experiments/results/iter/viz/
+experiments/tmp_perturbed/
+experiments/logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.toc
+
+# Editor / tooling state
+.claude/
+.omx/
+
+# Backup files
+*.bak*

@@ -1,0 +1,4 @@
+variant,recall_med,precision_med,MAE_cm-1_med,pearson_med
+"Ours-v1 (axis_box, n=30)",0.4,0.43,9.64,0.35
+"Ours-v2 (axis_box, n=60)",0.5,,,0.3469072490691774
+"Ours-v3 (cluster x-bounds, n=60)",1.0,0.7142857142857143,2.579304390190771,0.9549652500518337

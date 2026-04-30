@@ -1,0 +1,4 @@
+,gemini-3.1-pro-preview,gpt-5.4,qwen-vl-max
+gemini-3.1-pro-preview,1.0,0.052,0.111
+gpt-5.4,0.052,1.0,0.085
+qwen-vl-max,0.111,0.085,1.0

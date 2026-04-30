@@ -1,0 +1,19 @@
+# Core scientific stack
+numpy
+scipy
+pandas
+scikit-image
+scikit-learn
+Pillow
+matplotlib
+openpyxl
+
+# Deep learning
+torch
+transformers
+ultralytics
+
+# LLM SDKs
+openai>=1.40
+google-genai>=0.3
+anthropic

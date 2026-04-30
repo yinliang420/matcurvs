@@ -1,0 +1,17 @@
+{
+  "image_id": "00e558db0245b40006acf7a1fed358a2b32c152e64d33b77cef58e50a9cd1eb9_2",
+  "backend": "vlm_claude-opus-4-6",
+  "success": false,
+  "error": "http 503: No available channel for model claude-opus-4-6 under group default (distributor) (request id: 202604270403358788676108268d9d6fzP6dzc6)",
+  "n_predicted_trails": 0,
+  "n_gt_trails": 6,
+  "image_size": [
+    403,
+    340
+  ],
+  "pred_real": [],
+  "pred_pixel": [],
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "latency_s": 1.11
+}

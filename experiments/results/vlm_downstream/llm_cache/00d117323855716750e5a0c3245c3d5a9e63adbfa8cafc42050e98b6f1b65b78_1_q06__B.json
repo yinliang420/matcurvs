@@ -1,0 +1,19 @@
+{
+  "qid": "00d117323855716750e5a0c3245c3d5a9e63adbfa8cafc42050e98b6f1b65b78_1_q06",
+  "image_id": "00d117323855716750e5a0c3245c3d5a9e63adbfa8cafc42050e98b6f1b65b78_1",
+  "condition": "B",
+  "x_star": 78.9550154299765,
+  "y_gt": 19.327122043908894,
+  "raw_response": "'s peak goes up to maybe y=200. The extraction might have smoothed it.\nBut regardless, curve_1 = GO.\nWait, the prompt says \"The curve labeled 'longest' is the one to answer about.\"\nIn the JSON, `curve_1` has `\"label\": \"longest\"`.\nSo I should find the value of y on the GO",
+  "y_pred": 200.0,
+  "parse_method": "regex",
+  "prompt_hash": "299999afe4c90e68",
+  "latency_s": 21.716663958999998,
+  "usage": {
+    "prompt_tokens": 3786,
+    "completion_tokens": 2044,
+    "total_tokens": 5830
+  },
+  "attempts": 1,
+  "error": null
+}

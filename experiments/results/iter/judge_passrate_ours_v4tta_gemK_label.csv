@@ -1,0 +1,4 @@
+judge,n_204,image_pass_204,n_90,image_pass_90,median_latency
+gemini-3.1-pro-preview,204,0.108,90,0.1,16.05
+gpt-5.4,204,0.093,90,0.111,5.08
+qwen-vl-max,204,0.544,90,0.422,4.39

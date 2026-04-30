@@ -1,0 +1,96 @@
+% ===========================================================================
+% MatCurvs-Reasoning rigorous results (n=49 panels, 188 questions, GT from L1 manual)
+% Generated 2026-04-30 from experiments/mr_answers/rigorous_*.jsonl
+% ===========================================================================
+
+% ---- Table 3: headline 4-method × 3-model comparison ----------------------
+\begin{table}[t]
+\centering
+\caption{\textbf{MatCurvs-Reasoning rigorous evaluation} ($n{=}49$ panels,
+$188$ questions; ground truth from L1 manual real-coordinate annotation).
+Methods compared: \textbf{M1} VLM with image only;
+\textbf{M2} VLM with image \emph{and} extracted $(x,y)$ data;
+\textbf{M3} text LLM with extracted data only (no image);
+\textbf{M4} \texttt{scipy/numpy} oracle on extracted data (deterministic;
+serves as the extraction-error ceiling).
+$\mathrm{medRel}$ = median of $|{\hat{a}-a^{*}}|/\max(|a^{*}|,1)$ across
+items where the model returned a parseable number; $\mathrm{pass}_{5\%}$ =
+fraction of items with $\mathrm{relErr}<0.05$. Best per method in
+\textbf{bold}.}
+\label{tab:mr-rigorous-headline}
+\small
+\begin{tabular}{llrrr}
+\toprule
+Method & Model & $N$ & $\mathrm{medRel}\downarrow$ & $\mathrm{pass}_{5\%}\uparrow$ \\
+\midrule
+\multirow{3}{*}{M1 (VLM, image only)}
+  & qwen-vl-max            & 188 & 32.6\% & 21.3\% \\
+  & gemini-3.1-pro-preview & 188 & 26.4\% & 32.4\% \\
+  & \textbf{gpt-5.4}       & 188 & \textbf{15.4\%} & \textbf{37.2\%} \\
+\midrule
+\multirow{3}{*}{M2 (VLM, image + data)}
+  & qwen-vl-max            & 188 & 15.9\% & 28.2\% \\
+  & gemini-3.1-pro-preview & 188 &  4.7\% & 46.8\% \\
+  & \textbf{gpt-5.4}       & 188 & \textbf{4.3\%}  & \textbf{53.2\%} \\
+\midrule
+\multirow{3}{*}{M3 (LLM, data only)}
+  & qwen3-max              & 188 & 14.0\% & 38.3\% \\
+  & claude-opus-4.6        & 188 &  8.5\% & 44.1\% \\
+  & \textbf{gpt-5.4}       & 188 & \textbf{4.6\%}  & \textbf{52.1\%} \\
+\midrule
+M4 (scipy oracle) & --- & 188 & 6.7\% & 44.7\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% ---- Table 4: per-task-type breakdown (median rel-err) -------------------
+\begin{table}[t]
+\centering
+\caption{\textbf{Per-task-type breakdown of median relative error.}
+The ``stacked-intensity-offset'' (C-Stack) task is the strongest single
+piece of evidence that data extraction unlocks reasoning the image alone
+does not: VLMs see two visually-overlapping spectra and cannot quantify
+the constant intensity shift, while a one-line \texttt{numpy.median} call
+on the extracted curves delivers the answer.}
+\label{tab:mr-rigorous-by-task}
+\small
+\begin{tabular}{lcccccc}
+\toprule
+\multirow{2}{*}{Task (level)} &
+\multicolumn{2}{c}{M1 (image)} &
+\multicolumn{2}{c}{M2 (image+data)} &
+\multicolumn{2}{c}{M3 (data)} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+& gpt-5.4 & qwen-vl-max & gpt-5.4 & qwen-vl-max & gpt-5.4 & claude-4.6 \\
+\midrule
+A1 \emph{y at $x_0$}            & 99.7\%  & 99.8\%  & 5.0\%  & 6.9\%  & 6.2\%  & 12.2\% \\
+A2 \emph{argmax in [a,b]}       &  0.4\%  &  1.5\%  & 0.4\%  & 2.0\%  & 0.5\%  &  0.6\% \\
+A3 \emph{FWHM main peak}        & 17.6\%  & 32.8\%  & 20.3\% & 41.6\% & 20.5\% & 30.0\% \\
+B-Raman \emph{peaks / ID-IG}    &  3.0\%  &  9.5\%  & 2.9\%  & 9.4\%  & 3.3\%  &  9.4\% \\
+\textbf{C-Stack \emph{offset}}  & \textbf{23.1\%} & \textbf{99.2\%} & \textbf{3.5\%} & \textbf{62.3\%} & \textbf{3.1\%} & \textbf{2.8\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% ---- Table 5: per-chart-family breakdown (best of each method) ----------
+\begin{table}[t]
+\centering
+\caption{\textbf{Per-chart-family median relative error}, best model
+within each method shown. XRD, Raman and XPS dominate the panel pool;
+XAFS ($n{=}8$) is small and harder for all methods.}
+\label{tab:mr-rigorous-by-family}
+\small
+\begin{tabular}{lcccc}
+\toprule
+Family ($n$) & M1 best & M2 best & M3 best & M4 scipy \\
+\midrule
+XRD ($n{=}90$)     & 26.5\% (gpt) &  4.9\% (gpt) &  5.1\% (gpt) &  7.3\% \\
+Raman ($n{=}53$)   &  6.4\% (gpt) &  3.6\% (gpt) &  3.1\% (gpt) &  4.3\% \\
+XPS ($n{=}34$)     & 10.5\% (gpt) &  3.2\% (gpt) &  5.5\% (gpt) &  5.1\% \\
+XAFS ($n{=}8$)     & 63.6\% (qwen)& 55.8\% (gpt) & 57.0\% (claude) & 59.0\% \\
+generic ($n{=}3$)  &  4.4\% (gem) &  0.2\% (gem) &  0.3\% (gpt) &  0.2\% \\
+\bottomrule
+\end{tabular}
+\end{table}

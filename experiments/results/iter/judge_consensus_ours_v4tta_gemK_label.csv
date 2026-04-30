@@ -1,0 +1,4 @@
+threshold_fail_votes_ge,n_total,n_abstain,abstain_rate,lr05_kept,lr05_abstained,lr05_delta
+1,90,88,0.978,0.5,0.484,0.016
+2,90,78,0.867,0.917,0.418,0.499
+3,90,47,0.522,0.77,0.223,0.546

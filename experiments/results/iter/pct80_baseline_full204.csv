@@ -1,0 +1,5 @@
+csv,approx,n_images,n_lines,pct80_all,iou_m_all,pct80_L1,pct80_L2,pct80_L3,pct80_L4,iou_m_L1,iou_m_L2,iou_m_L3,iou_m_L4,n_L1,n_L2,n_L3,n_L4
+iter11_m2f_multiscale_full204_metrics.csv,True,204,455,0.0022,0.4839,0.0143,0.0,0.0,0.0,0.6166,0.4501,0.4932,0.371,70,118,203,64
+iter10_color_dilate_full204_metrics.csv,True,204,455,0.0022,0.4847,0.0143,0.0,0.0,0.0,0.62,0.4505,0.4964,0.3624,70,118,203,64
+iter8_thr035_dil3_full204_metrics.csv,True,204,455,0.0022,0.4838,0.0143,0.0,0.0,0.0,0.6191,0.4494,0.4958,0.3612,70,118,203,64
+smoke_iter12_full204_metrics.csv,False,3,11,0.0,0.2912,0.0,0.0,0.0,0.0,0.0,0.0,0.2912,0.0,0,0,11,0
