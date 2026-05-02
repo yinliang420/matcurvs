@@ -6,10 +6,6 @@
 ## Authors
 - **Liang Yin** · School of Advanced Interdisciplinary Sciences,
   University of Chinese Academy of Sciences · `yinliang22@mails.ucas.ac.cn`
-- **Songlin Yu** (corresponding) · University of Chinese Academy of Sciences ·
-  `yusonglin22@mails.ucas.ac.cn`
-- **Jianjun Liu** (corresponding) · Shanghai Institute of Ceramics,
-  Chinese Academy of Sciences · `jliu@mail.sic.ac.cn`
 
 ## Datasets — on HuggingFace
 
