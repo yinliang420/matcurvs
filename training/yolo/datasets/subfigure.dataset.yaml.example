@@ -1,0 +1,6 @@
+path: DATASET_ROOT
+train: images/train
+val: images/val
+nc: 1
+names:
+  - subfigure

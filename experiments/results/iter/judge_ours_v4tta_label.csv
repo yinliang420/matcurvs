@@ -1,2 +1,0 @@
-image_id,judge,k_pred,k_seen,image_pass,per_curve_pass_csv,comment,latency_s,error,raw_head
-00d117323855716750e5a0c3245c3d5a9e63adbfa8cafc42050e98b6f1b65b78_1,qwen-vl-max,4,4,True,"1,1,1,1",All four overlays accurately follow their respective data curves without errors.,8.24,,"{   ""k_seen"": 4,   ""per_curve"": [     {       ""id"": 0,       ""pass"": true,       ""why"": ""Follows SiOC curve without crossing other elements; endpoints within plot area.""     },     {       ""id"": 1,   "

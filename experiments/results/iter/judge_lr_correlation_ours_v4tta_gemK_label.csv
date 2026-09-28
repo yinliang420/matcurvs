@@ -1,4 +1,0 @@
-judge,n_pass,n_fail,lr05_pass,lr05_fail,delta
-gemini-3.1-pro-preview,9,81,0.889,0.44,0.449
-gpt-5.4,10,80,0.8,0.445,0.355
-qwen-vl-max,38,52,0.766,0.279,0.487

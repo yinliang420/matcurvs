@@ -1,25 +1,13 @@
-# Core scientific stack
 numpy
-scipy
 pandas
 scikit-image
 scikit-learn
-Pillow
+scipy
 matplotlib
-openpyxl
-
-# Deep learning
+Pillow
+opencv-python
 torch
-transformers
+segmentation-models-pytorch
 ultralytics
-
-# LLM SDKs
 openai>=1.40
-google-genai>=0.3
-anthropic
-
-# Async I/O for the multimodal-LLM subfigure classifier (classifier/figure_class.py)
-aiofiles
-
-# HuggingFace dataset hub (download / upload MatCurvs L0/L1/L2)
-huggingface_hub
+openpyxl

@@ -1,6 +1,0 @@
-method,n,success_rate,empty_pred_rate,median_latency_s
-GPT-5.4,90,1.0,0.0,19.21
-Gemini-3.1-pro,90,1.0,0.644,33.13
-Qwen-3.5-plus,90,0.9,0.0,128.1
-Claude Opus 4.6,2,0.0,0.0,1.24
-Ours (iter12 phaseC_flip),90,1.0,0.0,1.5

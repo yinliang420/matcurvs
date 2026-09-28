@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "model_id": "Qwen/Qwen2.5-VL-7B-Instruct",
+  "load_mode": "local_files_only",
+  "config_sha256": "9d506bb6cd45d455c52b6eba66cca7dc145b6b704b12d84e441fb4b0816dbf36",
+  "weight_index_sha256": "392f156886b8cf8cddd131caa4bb05e48dee00a4727ee719312c0ebe7e3ace45",
+  "weight_shards_sha256": {
+    "model-00001-of-00005.safetensors": "e97b877e47fde53a6c6e77aafb36e58e91ee9d95c4a3eeac6f1b5c0e6a1c986e",
+    "model-00002-of-00005.safetensors": "a9a300a43b4724eee2abe7c18ceb26768d0ab011eb0cad19d9bfd2476a24d024",
+    "model-00003-of-00005.safetensors": "111223d173e00bbee81cba1216fad28668df3476706b7fd26f4d5b50f8b3a507",
+    "model-00004-of-00005.safetensors": "ef47f634fa57d46ee134edcc09f34085a47da1e16c12a2abe0d67118be6d72ed",
+    "model-00005-of-00005.safetensors": "0c859795ad3a627a9b95bcb762e059d5b768a4a36fdd4affeff269d93fdecc67"
+  },
+  "generation": {
+    "do_sample": false,
+    "max_new_tokens": 64,
+    "attention_implementation": "flash_attention_2",
+    "torch_dtype": "bfloat16"
+  },
+  "environment": {
+    "python": "3.12.11",
+    "torch": "2.8.0",
+    "cuda": "12.8",
+    "transformers": "4.57.6",
+    "qwen_vl_utils": "0.0.14",
+    "flash_attn": "2.8.3"
+  },
+  "verification": "The runner records SHA-256 digests of every local safetensors shard before inference."
+}

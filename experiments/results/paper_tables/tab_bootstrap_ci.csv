@@ -1,9 +1,0 @@
-comparison,metric,phaseC_flip,baseline,delta,ci_lo,ci_hi,n
-phaseC_flip vs phaseC_scales512 (flip-TTA only),iou_global,0.6492,0.6415,0.0077,0.0047,0.0105,90
-"phaseC_flip vs phaseB_q12_d3 (iter12 vs iter11, cumulative)",iou_global,0.6492,0.6408,0.0084,-0.001,0.0178,90
-phaseC_flip vs phaseC_scales512 (flip-TTA only),iou_matched_mean,0.481,0.4729,0.0081,0.0026,0.0164,90
-"phaseC_flip vs phaseB_q12_d3 (iter12 vs iter11, cumulative)",iou_matched_mean,0.481,0.4768,0.0042,-0.0046,0.0137,90
-phaseC_flip vs phaseC_scales512 (flip-TTA only),coverage_gt,0.8306,0.8008,0.0298,0.0271,0.0327,90
-"phaseC_flip vs phaseB_q12_d3 (iter12 vs iter11, cumulative)",coverage_gt,0.8306,0.7398,0.0907,0.0859,0.0957,90
-phaseC_flip vs phaseC_scales512 (flip-TTA only),coverage_pred,0.7558,0.7703,-0.0145,-0.0168,-0.0122,90
-"phaseC_flip vs phaseB_q12_d3 (iter12 vs iter11, cumulative)",coverage_pred,0.7558,0.8336,-0.0778,-0.0868,-0.0694,90

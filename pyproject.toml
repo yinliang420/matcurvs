@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "matdeplot"
+version = "0.1.0"
+description = "Paper-aligned extraction of real-coordinate curves from materials-science charts"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+
+[tool.setuptools]
+packages = ["matdeplot", "training", "training.foreground", "training.foreground.configs", "training.yolo", "training.yolo.configs", "training.yolo.datasets"]
+package-dir = {matdeplot = "src/matdeplot", training = "training", "training.foreground" = "training/foreground", "training.foreground.configs" = "training/foreground/configs", "training.yolo" = "training/yolo", "training.yolo.configs" = "training/yolo/configs", "training.yolo.datasets" = "training/yolo/datasets"}
+
+[tool.setuptools.package-data]
+training = ["MANIFEST.json", "foreground/configs/*.yaml"]
+"training.yolo.configs" = ["*.yaml"]
+"training.yolo.datasets" = ["*.yaml.example"]

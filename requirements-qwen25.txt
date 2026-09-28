@@ -1,0 +1,7 @@
+# Local Qwen2.5-VL curve-count environment used by scripts/predict_qwen25_counts.py.
+# The exact versions below were used for the reported local-Qwen condition.
+-r requirements.txt
+torch==2.8.0
+transformers==4.57.6
+qwen-vl-utils==0.0.14
+flash-attn==2.8.3

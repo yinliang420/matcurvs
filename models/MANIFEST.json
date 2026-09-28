@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "models": [
+    {
+      "role": "foreground",
+      "filename": "mask2foremer_q12_d3_h256_best.pt",
+      "bytes": 654138953,
+      "sha256": "847aba64be1507c9061c98756d396721a8ff1e47f0d1a9bac41e3af02eee17a9",
+      "availability": "not included in this code-only repository"
+    },
+    {
+      "role": "axis",
+      "filename": "axis_yolo11_best.pt",
+      "bytes": 114394713,
+      "sha256": "cfec499d888fdf28f4475b2f2a040fc6a3275d2b0c34fabee6d9ebe816512569",
+      "availability": "not included in this code-only repository"
+    },
+    {
+      "role": "legend",
+      "filename": "legend_yolo11_best.pt",
+      "bytes": 114417241,
+      "sha256": "9e1bbdfcabeff45a0faa19eb276b97a96d9ba3f96b0f561eae48832df0403310",
+      "availability": "not included in this code-only repository"
+    },
+    {
+      "role": "subfigure",
+      "filename": "subfigure_yolo11x_best.pt",
+      "bytes": 114399193,
+      "sha256": "ae40f5e7fab0a10d8b56537e301f90ff81b3204ebd2535359f00b5d98cb37742",
+      "availability": "not included in this code-only repository"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "models": {
+    "subfigure": "subfigure_yolo11x_best.pt",
+    "axis": "axis_yolo11_best.pt",
+    "legend": "legend_yolo11_best.pt",
+    "foreground": "mask2foremer_q12_d3_h256_best.pt"
+  },
+  "foreground": {
+    "encoder": "mit_b3",
+    "hidden_dim": 256,
+    "n_queries": 12,
+    "decoder_layers": 3,
+    "threshold": 0.25,
+    "objectness_threshold": 0.5,
+    "fallback_fraction": 0.003,
+    "tta_scales": [512, 768, 1024],
+    "flip_tta": true
+  },
+  "separation": {
+    "mode": "v4",
+    "spatial_weight": 0.5,
+    "kmeans_n_init": 5,
+    "random_state": 42,
+    "morph_close_kernel": 5,
+    "dilation_kernel": 3,
+    "min_cluster_area": 200,
+    "delta_e_threshold": 12.0
+  },
+  "curve_count": {
+    "paper_provider": "gemini",
+    "paper_model": "gemini-3.1-pro-preview",
+    "open_fallback": "silhouette",
+    "candidate_min": 2,
+    "candidate_max": 6
+  },
+  "calibration": {
+    "minimum_ticks": 2,
+    "allow_log_scale": true,
+    "synthetic_fallback": true,
+    "synthetic_tick_count": 6
+  },
+  "abstention": {
+    "threshold": 0.3
+  }
+}

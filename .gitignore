@@ -1,52 +1,62 @@
-# Secrets
+# Credentials and local configuration
 .env
-.env.local
+.env.*
+!.env.example
+*.key
+*.pem
 
-# Model checkpoints (release via HuggingFace or GitHub release tag, not in repo)
+# Model checkpoints and datasets
 *.pt
 *.pth
+*.ckpt
+*.safetensors
+*.bin
+data/
+datasets/
+!training/yolo/datasets/
+matcurvs_l0/
+matcurvs_l1/
+matcurvs_l2/
 
-# Bundled datasets (live on HuggingFace)
-data_base_L2/
-release/
-
-# Run-time outputs
-pipeline_out*/
-experiments/mr_answers/
-experiments/mr_logs/
-experiments/results/iter/viz/
-experiments/tmp_perturbed/
-experiments/logs/
+# Generated outputs
+outputs/
+results/
+logs/
+*.log
+accepted_manifest.json
+judgment_log.jsonl
+judge_verdict.json
+judge_response.jsonl
+training/**/runs/
+training/**/wandb/
+training/**/tensorboard/
+training/**/cache/
+training/**/.cache/
+training/**/*.pt
+training/**/*.pth
+training/**/*.ckpt
+training/**/*.safetensors
+training/**/*.bin
+training/**/*.log
+training/**/data.local/
+training/**/input.local/
+training/**/output.local/
+training/**/synthetic_data/
+training/**/real_data/
 
 # Python
+build/
+dist/
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
 *.egg-info/
+.mypy_cache/
+.ruff_cache/
 .venv/
 venv/
 
-# OS
+# Editors and operating systems
 .DS_Store
 Thumbs.db
-
-# LaTeX build artifacts
-*.aux
-*.bbl
-*.blg
-*.log
-*.out
-*.synctex.gz
-*.fdb_latexmk
-*.fls
-*.toc
-
-# Editor / tooling state
-.claude/
-.omx/
-
-# Backup files
-*.bak*
-
-# Local review notes (do not push)
-CODE_REVIEW.md
+.idea/
+.vscode/

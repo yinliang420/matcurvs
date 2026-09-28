@@ -1,0 +1,32 @@
+schema_version: "1.0"
+selected_experiment: v11_raw40k_q12_d3_h256
+model:
+  encoder: mit_b3
+  hidden_dim: 256
+  n_queries: 12
+  decoder_layers: 3
+training:
+  epochs: 100
+  batch_size: 2
+  image_size: 640
+  line_width: 3
+  max_instances: 14
+  real_weight: 3.0
+  real_repeat: 64
+  learning_rate: 0.0001
+  warmup_epochs: 5
+  binary_threshold: 0.5
+  weight_decay: 0.05
+  num_workers: 8
+  seed: 42
+splits:
+  synthetic_val_ratio: 0.05
+  real_test_size: 40
+  real_val_size: 20
+preprocessing:
+  use_yolo_real_mask: true
+  yolo_axis_confidence: 0.5
+  yolo_legend_confidence: 0.3
+selection:
+  best_on: real
+  metric: real_binary_iou

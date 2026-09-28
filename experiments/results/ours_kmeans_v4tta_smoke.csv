@@ -1,2 +1,0 @@
-image_id,cell_id,success,n_predicted_trails,n_gt_trails,curve_pq,dtw_delta,ccr_at_tau,cond_drmse,abstain_f1,instance_f1,error,used_fallback,m2f_fg_frac,elapsed_s,stratum
-0001874a8736f17b/b3e10ff5cf30578f02d1c7ac711f24ee13ab7097032cbd21c2a27b586af10960_1,ours_kmeans_v4tta_smoke,True,5,2,0.0,15.365660099599618,1.0,0.21418572981466016,,0.5714285714285715,,False,0.0493190984578885,8.719213008880615,L4_same_color_overlap
