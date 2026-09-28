@@ -6,9 +6,9 @@
 
 Liang Yin · Zhan'ao Yao · Jiahui Shi · Songlin Yu · Jianjun Liu
 
-[Dataset](https://huggingface.co/datasets/yinliang22/matcurvs) · [Reproducibility](reproducibility/ac_k_source/README.md) · [Training](training/README.md)
+[Dataset](https://huggingface.co/datasets/yinliang22/matcurvs) · [Training](training/README.md)
 
-MatCurvs turns materials-science charts into numerical curve data for quantitative analysis. This repository provides **MatDeplot**, the extraction pipeline, together with model-training recipes and a reproducibility capsule. MatDeplot detects axes and legends, segments curve pixels, separates individual curves, and exports pixel and calibrated coordinates as JSON and Excel files.
+MatCurvs turns materials-science charts into numerical curve data for quantitative analysis. This repository provides **MatDeplot**, the extraction pipeline, together with model-training recipes. MatDeplot detects axes and legends, segments curve pixels, separates individual curves, and exports pixel and calibrated coordinates as JSON and Excel files.
 
 ## Dataset
 
@@ -22,7 +22,7 @@ The benchmark covers XRD, Raman, XPS, XAFS, EIS, GCD, and CV charts.
 | L1 | Manual per-curve pixel annotations | 204 panels; 90-panel leakage-clean evaluation subset |
 | L2 | Screened real-coordinate curves | 8,026 curves from 3,817 panels |
 
-See the dataset page for files, access, and licensing. The in-repository capsule below can be evaluated independently of the full dataset and model weights.
+See the dataset page for files, access, and licensing.
 
 ## Installation
 
@@ -38,38 +38,6 @@ python -m pip install -e .
 ```
 
 PaddleOCR and its PaddlePaddle runtime are optional dependencies for reading axis ticks. MinerU is needed only for PDF input. The local Qwen curve-count runner has a separate GPU environment described below.
-
-## Reproduce the released evaluation
-
-The capsule contains **90 panels, 203 manually annotated curves, and six curve-count conditions**, including annotations, frozen prediction masks, count CSVs, splits, expected results, and an integrity manifest. It recomputes the released curve-count comparison without API calls, source images, or model weights.
-
-For evaluation alone, the minimal dependencies are:
-
-```bash
-python -m pip install numpy scipy opencv-python
-```
-
-Run the evaluator with a new output directory:
-
-```bash
-python reproducibility/ac_k_source/evaluate.py \
-  --capsule reproducibility/ac_k_source \
-  --output outputs/clean90 \
-  --check-expected
-```
-
-Success prints `evaluation_ok panels=90 gt_curves=203 rows=1218` followed by the output path. Results include `ac_k_source_table.csv`.
-
-| Curve-count source | Recovered curves at IoU ≥ 0.5 | LR0.5 |
-|---|---:|---:|
-| Gemini, submitted configuration | 93 / 203 | 45.81% |
-| GPT-5.4 | 91 / 203 | 44.83% |
-| Qwen-VL-Max | 96 / 203 | 47.29% |
-| Qwen3-VL-Plus | 94 / 203 | 46.31% |
-| Local Qwen2.5-VL-7B-Instruct | 93 / 203 | 45.81% |
-| Silhouette selection | 69 / 203 | 33.99% |
-
-LR0.5 measures the fraction of ground-truth curves with a one-to-one matched prediction reaching pixel IoU ≥ 0.5; ground-truth polylines are rasterized at 5-pixel thickness. These results concern the fixed clean-90 comparison. Recomputing them from frozen masks does not rerun image extraction or the full reasoning benchmark. See the [capsule documentation](reproducibility/ac_k_source/README.md) for the protocol and data provenance.
 
 ## Extract curves from a chart
 
@@ -154,7 +122,6 @@ Judge admission checks curve count, shape, and axis-range plausibility. It is di
 | `configs/paper.json` | Selected extraction configuration |
 | `models/` | Checkpoint metadata |
 | `training/` | YOLO and foreground-model training code and recipes |
-| `reproducibility/ac_k_source/` | Clean-90 evaluation inputs, evaluator, and expected outputs |
 | `tests/` | Extraction and training regression tests |
 
 See [training/README.md](training/README.md) for training commands, data formats, and configuration details. Training requires the corresponding datasets and base weights; these are not included in the Git repository.
@@ -178,4 +145,4 @@ python -m unittest discover -s tests
 
 ## License
 
-Code is released under the [MIT License](LICENSE). The capsule's author-created annotations and frozen predictions are covered by its [data license](reproducibility/ac_k_source/DATA_LICENSE.md). Source figure images are not redistributed in the capsule; consult the dataset page for the full dataset's terms.
+Code is released under the [MIT License](LICENSE). See the [dataset page](https://huggingface.co/datasets/yinliang22/matcurvs) for data access and licensing.

@@ -1,1 +1,0 @@
-{"conditions":{"gemini_submitted":{"lr_0_5_hits":93,"lr_0_5_total":203},"gpt54":{"lr_0_5_hits":91,"lr_0_5_total":203},"local_qwen25":{"lr_0_5_hits":93,"lr_0_5_total":203},"qwen3_vl_plus":{"lr_0_5_hits":94,"lr_0_5_total":203},"qwen_vl_max":{"lr_0_5_hits":96,"lr_0_5_total":203},"silhouette":{"lr_0_5_hits":69,"lr_0_5_total":203}},"curves203":203,"panels90":90}
