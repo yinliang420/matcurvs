@@ -26,7 +26,7 @@ See the dataset page for files, access, and licensing. The in-repository capsule
 
 ## Installation
 
-Use Python 3.10 or later and run commands from the repository root.
+Use Python 3.9 or later and run commands from the repository root.
 
 ```bash
 git clone https://github.com/yinliang420/matcurvs.git

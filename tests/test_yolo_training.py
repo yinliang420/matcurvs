@@ -322,7 +322,7 @@ class YoloTrainingTest(unittest.TestCase):
         with mock.patch.dict(sys.modules, {"ultralytics": fake_module}, clear=False):
             self.assertIs(_load_yolo_class(), fake_yolo)
 
-    def test_dataset_examples_match_anonymous_placeholders(self):
+    def test_dataset_examples_match_placeholders(self):
         root = Path(__file__).resolve().parents[1]
         expected = {
             "axis": ["axis"],

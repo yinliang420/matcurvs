@@ -1,4 +1,4 @@
-"""Anonymous YOLO training entrypoints for the selected release recipes."""
+"""MatCurvs YOLO training entrypoints for the selected release recipes."""
 
 import argparse
 from pathlib import Path, PurePosixPath, PureWindowsPath
@@ -268,7 +268,7 @@ def run_training(recipe_path, dataset_yaml, base_model, output_directory, device
 
 
 def build_argument_parser():
-    parser = argparse.ArgumentParser(description="Train selected anonymous YOLO release recipes.")
+    parser = argparse.ArgumentParser(description="Train selected MatCurvs YOLO release recipes.")
     parser.add_argument("--recipe", required=True, type=Path)
     parser.add_argument("--dataset", required=True, type=Path)
     parser.add_argument("--base-model", required=True, type=Path)

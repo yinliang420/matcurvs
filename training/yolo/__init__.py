@@ -1,1 +1,1 @@
-"""YOLO training helpers for the anonymous release."""
+"""YOLO training helpers for the MatCurvs release."""

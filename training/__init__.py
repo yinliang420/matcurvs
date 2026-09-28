@@ -1,1 +1,1 @@
-"""Anonymous training release metadata and selected config recipes."""
+"""MatCurvs training release metadata and selected config recipes."""
