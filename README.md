@@ -2,7 +2,7 @@
 
 **MatCurvs: Article Real-Coordinate Curve Extraction for Agent-Ready Materials Reasoning**
 
-**Accepted at NeurIPS 2026 — Main Conference**
+**Accepted at NeurIPS 2026 — Poster**
 
 Liang Yin · Zhan'ao Yao · Jiahui Shi · Songlin Yu · Jianjun Liu
 
