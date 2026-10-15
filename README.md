@@ -138,7 +138,7 @@ python -m unittest discover -s tests
 @inproceedings{yin2026matcurvs,
   title     = {{MatCurvs}: Article Real-Coordinate Curve Extraction for Agent-Ready Materials Reasoning},
   author    = {Yin, Liang and Yao, Zhan'ao and Shi, Jiahui and Yu, Songlin and Liu, Jianjun},
-  booktitle = {Advances in Neural Information Processing Systems},
+  booktitle={The Fortieth Annual Conference on Neural Information Processing Systems},
   year      = {2026}
 }
 ```
