@@ -234,9 +234,15 @@ def load_model(
     if cache and key in _MODEL_CACHE:
         return _MODEL_CACHE[key]
 
-    obj = torch.load(ckpt_path, map_location="cpu", weights_only=False)
-    cfg = obj.get("config", {}) if isinstance(obj, dict) else {}
-    state = obj["model"] if isinstance(obj, dict) and "model" in obj else obj
+    obj = torch.load(ckpt_path, map_location="cpu", weights_only=True)
+    if not isinstance(obj, dict):
+        raise ValueError("Foreground checkpoint must be a mapping")
+    cfg = obj.get("config", {})
+    state = obj.get("model", obj)
+    if not isinstance(cfg, dict):
+        raise ValueError("Foreground checkpoint config must be a mapping")
+    if not isinstance(state, dict):
+        raise ValueError("Foreground checkpoint model state must be a mapping")
 
     model = Mask2FormerStyleModel(
         encoder_name=cfg.get("encoder", "mit_b3"),
@@ -244,19 +250,7 @@ def load_model(
         n_queries=cfg.get("n_queries", 12),
         dec_layers=cfg.get("dec_layers", 3),
     )
-    missing, unexpected = model.load_state_dict(state, strict=False)
-    if missing:
-        suffix = " ..." if len(missing) > 8 else ""
-        print(
-            f"[mask2former] missing keys ({len(missing)}): "
-            f"{missing[:8]}{suffix}"
-        )
-    if unexpected:
-        suffix = " ..." if len(unexpected) > 8 else ""
-        print(
-            f"[mask2former] unexpected keys ({len(unexpected)}): "
-            f"{unexpected[:8]}{suffix}"
-        )
+    model.load_state_dict(state, strict=True)
     model.eval().to(device)
     if cache:
         _MODEL_CACHE[key] = model

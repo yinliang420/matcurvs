@@ -163,7 +163,10 @@ def load_cached_counts(path: Path) -> Dict[str, int]:
     path = Path(path)
     if path.suffix.lower() == ".json":
         payload = json.loads(path.read_text(encoding="utf-8"))
-        return {str(key): int(value) for key, value in payload.items()}
+        counts = {str(key): int(value) for key, value in payload.items()}
+        if any(value < 1 for value in counts.values()):
+            raise ValueError("cached curve counts must be positive integers")
+        return counts
 
     import pandas as pd
 
@@ -180,10 +183,13 @@ def load_cached_counts(path: Path) -> Dict[str, int]:
             "curve-count CSV must contain exactly one count column ending in '_k'"
         )
     column = count_columns[0]
-    return {
+    counts = {
         str(row["image_id"]): int(row[column])
         for _, row in frame.dropna(subset=[column]).iterrows()
     }
+    if any(value < 1 for value in counts.values()):
+        raise ValueError("cached curve counts must be positive integers")
+    return counts
 
 
 def silhouette_curve_count(
@@ -216,24 +222,29 @@ def silhouette_curve_count(
     else:
         sample = features
 
+    if count_config.candidate_min < 2:
+        raise ValueError("silhouette candidate_min must be at least two")
+    if np.unique(sample, axis=0).shape[0] < 2:
+        raise RuntimeError("silhouette curve counting requires distinct features")
     maximum_k = min(count_config.candidate_max, len(sample) - 1)
     candidates = range(count_config.candidate_min, maximum_k + 1)
     best_k: Optional[int] = None
     best_score = -np.inf
     for candidate in candidates:
-        labels = KMeans(
-            n_clusters=candidate,
-            n_init=separation_config.kmeans_n_init,
-            random_state=separation_config.random_state,
-        ).fit_predict(sample)
-        score = float(silhouette_score(sample, labels))
+        try:
+            labels = KMeans(
+                n_clusters=candidate,
+                n_init=separation_config.kmeans_n_init,
+                random_state=separation_config.random_state,
+            ).fit_predict(sample)
+            if np.unique(labels).size < 2:
+                continue
+            score = float(silhouette_score(sample, labels))
+        except ValueError:
+            continue
         if score > best_score:
             best_score = score
             best_k = candidate
     if best_k is None:
-        return CurveCountResult(
-            value=1,
-            source="silhouette",
-            fallback_reason="no_valid_candidate",
-        )
+        raise RuntimeError("silhouette curve counting found no valid K")
     return CurveCountResult(value=best_k, source="silhouette")

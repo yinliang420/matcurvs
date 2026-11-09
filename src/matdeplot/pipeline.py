@@ -137,7 +137,10 @@ class MatDeplotPipeline:
         foreground_mask = (
             foreground_probability >= self.config.foreground.threshold
         ) & valid_region
-        foreground_fraction = float(foreground_mask.mean())
+        valid_pixels = int(valid_region.sum())
+        foreground_fraction = (
+            float(foreground_mask.sum()) / valid_pixels if valid_pixels else 0.0
+        )
         used_fallback = (
             foreground_fraction < self.config.foreground.fallback_fraction
         )
@@ -166,25 +169,66 @@ class MatDeplotPipeline:
                     exception_type=type(exc).__name__,
                 )
             )
-            count_result = silhouette_curve_count(
-                image,
-                pixel_mask,
-                self.config.curve_count,
-                self.config.separation,
-            )
+            try:
+                count_result = silhouette_curve_count(
+                    image,
+                    pixel_mask,
+                    self.config.curve_count,
+                    self.config.separation,
+                )
+            except Exception as fallback_exc:
+                return self._failed_result(
+                    image_path,
+                    width,
+                    height,
+                    "curve_count",
+                    fallback_exc,
+                    started,
+                    failures=failures,
+                    axes=axes,
+                    legend_boxes=legend_boxes,
+                    metadata={"axis_detection": axis_diagnostics},
+                )
             count_result = CurveCountResult(
                 value=count_result.value,
                 source=count_result.source,
                 fallback_reason=f"{type(exc).__name__}: {exc}",
             )
 
-        cluster_masks = separate_curves(
-            image,
-            pixel_mask,
-            count_result.value,
-            valid_region,
-            self.config.separation,
-        )
+        try:
+            cluster_masks = separate_curves(
+                image,
+                pixel_mask,
+                count_result.value,
+                valid_region,
+                self.config.separation,
+            )
+        except Exception as exc:
+            return self._failed_result(
+                image_path,
+                width,
+                height,
+                "curve_separation",
+                exc,
+                started,
+                failures=failures,
+                axes=axes,
+                legend_boxes=legend_boxes,
+                metadata={"axis_detection": axis_diagnostics},
+            )
+        if not cluster_masks:
+            return self._failed_result(
+                image_path,
+                width,
+                height,
+                "curve_separation",
+                RuntimeError("curve separation produced no clusters"),
+                started,
+                failures=failures,
+                axes=axes,
+                legend_boxes=legend_boxes,
+                metadata={"axis_detection": axis_diagnostics},
+            )
 
         calibration: Optional[CalibrationResult] = None
         calibration_diagnostics = {
@@ -241,6 +285,20 @@ class MatDeplotPipeline:
                     confidence=confidence,
                     abstain=confidence < self.config.abstention.threshold,
                 )
+            )
+
+        if not curves:
+            return self._failed_result(
+                image_path,
+                width,
+                height,
+                "curve_extraction",
+                RuntimeError("curve separation produced no valid polylines"),
+                started,
+                failures=failures,
+                axes=axes,
+                legend_boxes=legend_boxes,
+                metadata={"axis_detection": axis_diagnostics},
             )
 
         return ExtractionResult(

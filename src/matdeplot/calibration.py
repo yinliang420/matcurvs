@@ -236,24 +236,31 @@ def _calibrate_one_axis(
         config.synthetic_fallback
         and len(primary_ticks) < config.minimum_ticks
     )
-    selected_ticks = (
-        generate_equidistant_ticks(
+    if use_synthetic:
+        # Pixel-spaced placeholders do not define a physical axis. Keep the
+        # fallback visible in diagnostics, but never expose it as real units.
+        selected_ticks = generate_equidistant_ticks(
             axis_line,
             axis_type,
             count=config.synthetic_tick_count,
         )
-        if use_synthetic
-        else primary_ticks
-    )
-    mapping = fit_axis_mapping(selected_ticks, config)
+        mapping = AxisMapping(
+            kind="unavailable",
+            coefficients=(1.0, 0.0),
+            ticks=selected_ticks,
+            calibrated=False,
+        )
+    else:
+        selected_ticks = primary_ticks
+        mapping = fit_axis_mapping(selected_ticks, config)
     diagnostics = {
         "primary_method": "ocr_ticks",
         "primary_tick_count": len(primary_ticks),
         "primary_status": "failed" if use_synthetic else "success",
         "fallback_triggered": use_synthetic,
         "fallback_method": "equidistant_ticks" if use_synthetic else None,
-        "fallback_status": "rescued" if use_synthetic else "not_triggered",
-        "selected_method": "equidistant_ticks" if use_synthetic else "ocr_ticks",
+        "fallback_status": "blocked" if use_synthetic else "not_triggered",
+        "selected_method": "unavailable" if use_synthetic else "ocr_ticks",
         "synthetic_ticks_used": use_synthetic,
         "selected_tick_count": len(selected_ticks),
         "scale_type": mapping.kind,

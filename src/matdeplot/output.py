@@ -16,6 +16,8 @@ def write_extraction(result: ExtractionResult, output_directory: Path) -> Dict[s
 
     output_directory = Path(output_directory)
     output_directory.mkdir(parents=True, exist_ok=True)
+    for stale_path in output_directory.glob("curve_*.xlsx"):
+        stale_path.unlink()
 
     record_path = output_directory / "extraction.json"
     record_path.write_text(

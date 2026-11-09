@@ -132,6 +132,8 @@ def separate_curves(
         )
         if len(features) < max(50, n_curves * 10):
             return []
+        if np.unique(features, axis=0).shape[0] < n_curves:
+            return []
         labels = KMeans(
             n_clusters=n_curves,
             n_init=config.kmeans_n_init,

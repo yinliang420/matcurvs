@@ -21,14 +21,26 @@ from matdeplot.calibration import (
     calibrate_axes,
     generate_equidistant_ticks,
 )
-from matdeplot.curve_count import CurveCountResult, silhouette_curve_count
+from matdeplot.curve_count import (
+    CurveCountResult,
+    load_cached_counts,
+    silhouette_curve_count,
+)
 from matdeplot.document_pipeline import (
     DocumentPipeline,
     MinerUPDFParser,
     crop_subfigures,
 )
 from matdeplot.pipeline import MatDeplotPipeline
-from matdeplot.schema import AxisDetection, AxisMapping, AxisTick, Box
+from matdeplot.output import write_extraction
+from matdeplot.schema import (
+    AxisDetection,
+    AxisMapping,
+    AxisTick,
+    Box,
+    CurveRecord,
+    ExtractionResult,
+)
 from matdeplot.separation import prepare_pixel_mask
 
 
@@ -143,7 +155,7 @@ class FallbackContractsTest(unittest.TestCase):
                 ocr=mock.Mock(),
             )
 
-        self.assertTrue(result.calibrated)
+        self.assertFalse(result.calibrated)
         self.assertEqual(result.diagnostics["x"]["primary_tick_count"], 0)
         self.assertEqual(result.diagnostics["y"]["primary_tick_count"], 1)
         self.assertTrue(result.diagnostics["x"]["synthetic_ticks_used"])
@@ -342,7 +354,7 @@ class FallbackContractsTest(unittest.TestCase):
         self.assertEqual(result.failures[-1].stage, "axis_detection")
         self.assertEqual(result.metadata["axis_detection"], diagnostics)
 
-    def test_pipeline_records_synthetic_calibration_and_real_points(self):
+    def test_pipeline_records_synthetic_calibration_without_real_points(self):
         pipeline = self.make_pipeline()
         curve_mask = self.make_curve_mask()
         mapping = AxisMapping(
@@ -352,7 +364,7 @@ class FallbackContractsTest(unittest.TestCase):
                 AxisTick(pixel=0.0, value=0.0),
                 AxisTick(pixel=10.0, value=10.0),
             ],
-            calibrated=True,
+            calibrated=False,
         )
         calibration = CalibrationResult(
             x_mapping=mapping,
@@ -360,7 +372,7 @@ class FallbackContractsTest(unittest.TestCase):
             diagnostics={
                 "x": {"synthetic_ticks_used": True},
                 "y": {"synthetic_ticks_used": True},
-                "calibrated": True,
+                "calibrated": False,
                 "used_synthetic_ticks": True,
             },
         )
@@ -396,7 +408,7 @@ class FallbackContractsTest(unittest.TestCase):
             "axis_yolo",
         )
         self.assertTrue(result.metadata["calibration"]["used_synthetic_ticks"])
-        self.assertNotEqual(result.curves[0].real_points, [])
+        self.assertEqual(result.curves[0].real_points, [])
         self.assertIsInstance(json.dumps(result.to_dict()), str)
 
     def test_crop_subfigures_empty_detector_returns_full_image_crop(self):
@@ -641,6 +653,18 @@ class FallbackContractsTest(unittest.TestCase):
             np.array_equal(separation_mock.call_args.args[1], fallback_mask)
         )
 
+    def test_foreground_fraction_uses_valid_region_area(self):
+        pipeline = self.make_pipeline()
+        curve_mask = self.make_curve_mask()
+        valid_region = np.zeros((24, 32), dtype=bool)
+        valid_region[2:4, 2:4] = True
+        probability = np.zeros((24, 32), dtype=np.float32)
+        probability[2, 2] = 0.8
+        with mock.patch("matdeplot.pipeline.detect_axes_with_fallback", return_value=(self.make_axes(), self.make_axis_diagnostics())), mock.patch("matdeplot.pipeline.detect_legends", return_value=[]), mock.patch("matdeplot.pipeline.build_valid_region", return_value=valid_region), mock.patch("matdeplot.pipeline.get_line_prob_multiscale", return_value=probability), mock.patch("matdeplot.pipeline.prepare_pixel_mask", return_value=curve_mask), mock.patch.object(pipeline, "_resolve_curve_count", return_value=CurveCountResult(value=1, source="silhouette")), mock.patch("matdeplot.pipeline.separate_curves", return_value=[curve_mask]), mock.patch("matdeplot.pipeline.mask_to_polyline", return_value=[(1.0, 1.0), (2.0, 2.0)]):
+            result = pipeline.extract(self.image_path, calibrate=False)
+        self.assertEqual(result.foreground_fraction, 0.25)
+        self.assertFalse(result.used_fallback)
+
     def test_prepare_pixel_mask_matches_direct_boolean_branches_without_morphology(self):
         image = np.array(
             [
@@ -710,6 +734,55 @@ class FallbackContractsTest(unittest.TestCase):
         self.assertEqual(result.value, 1)
         self.assertEqual(result.source, "silhouette")
         self.assertEqual(result.fallback_reason, "too_few_foreground_pixels")
+
+    def test_cached_counts_reject_nonpositive_values(self):
+        cache_path = self.root / "counts.json"
+        cache_path.write_text(json.dumps({"chart": 0}), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "positive integers"):
+            load_cached_counts(cache_path)
+
+    def test_pipeline_fails_when_curve_separation_returns_no_clusters(self):
+        pipeline = self.make_pipeline()
+        with mock.patch(
+            "matdeplot.pipeline.detect_axes_with_fallback",
+            return_value=(self.make_axes(), self.make_axis_diagnostics()),
+        ), mock.patch(
+            "matdeplot.pipeline.detect_legends",
+            return_value=[],
+        ), mock.patch(
+            "matdeplot.pipeline.get_line_prob_multiscale",
+            return_value=np.full((24, 32), 0.8, dtype=np.float32),
+        ), mock.patch(
+            "matdeplot.pipeline.separate_curves",
+            return_value=[],
+        ):
+            result = pipeline.extract(self.image_path, calibrate=False)
+
+        self.assertFalse(result.success)
+        self.assertEqual(result.failures[-1].stage, "curve_separation")
+
+    def test_output_writer_removes_stale_curve_files(self):
+        output_dir = self.root / "extraction"
+        points = [(1.0, 1.0), (2.0, 2.0)]
+        first = ExtractionResult(
+            image_id="chart",
+            image_size=(32, 24),
+            success=True,
+            curves=[
+                CurveRecord(0, points, [], 0.8, False),
+                CurveRecord(1, points, [], 0.8, False),
+            ],
+        )
+        second = ExtractionResult(
+            image_id="chart",
+            image_size=(32, 24),
+            success=True,
+            curves=[CurveRecord(0, points, [], 0.8, False)],
+        )
+        write_extraction(first, output_dir)
+        write_extraction(second, output_dir)
+        self.assertTrue((output_dir / "curve_001.xlsx").exists())
+        self.assertFalse((output_dir / "curve_002.xlsx").exists())
 
     def test_curve_count_exception_uses_silhouette_fallback_and_records_reason(self):
         pipeline = self.make_pipeline()
